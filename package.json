@@ -1,0 +1,13 @@
+{
+  "name": "minefield-chat",
+  "version": "0.0.0",
+  "description": "Minefield Chat Server",
+  "contributors": [
+    "Serge Borbit <serge.borbit@gmail.com>"
+  ],
+  "dependencies": {
+    "socket.io-mw": "0.0.3",
+    "underscore": "*",
+    "async": "*"
+  }
+}
