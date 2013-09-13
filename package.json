@@ -9,5 +9,8 @@
     "socket.io-mw": "0.0.3",
     "underscore": "*",
     "async": "*"
+  },
+  "scripts": {
+    "start": "bin/minefield-chat"
   }
 }
