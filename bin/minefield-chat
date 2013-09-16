@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+var config = require('../config');
+var server = require('../index');
+
+server.createServer(config, function(err) {
+  if (err) throw err;
+
+  console.log('Chat server is listening to %d port', config.port);
+});

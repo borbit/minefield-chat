@@ -32,11 +32,12 @@ exports.createServer = function(config, cb) {
 
     var message = {
       user: req.user.substr(0, 30)
-    , message: req.message.substr(0, 200)
+    , message: req.message.substr(0, 500)
     , time: Date.now()
     };
 
     messages.push(message);
+    messages = messages.splice(0, 100);
     res.message = message;
     next();
 
