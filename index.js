@@ -37,7 +37,11 @@ exports.createServer = function(config, cb) {
     };
 
     messages.push(message);
-    messages = messages.splice(0, 100);
+
+    if (messages.length > 200) {
+      messages.shift();
+    }
+
     res.message = message;
     next();
 
