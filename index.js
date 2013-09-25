@@ -33,6 +33,7 @@ exports.createServer = function(config, cb) {
     var message = {
       user: req.user.substr(0, 30)
     , message: req.message.substr(0, 500)
+    , email: req.email
     , time: Date.now()
     };
 
