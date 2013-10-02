@@ -35,6 +35,7 @@ exports.createServer = function(config, cb) {
     , message: req.message.substr(0, 500)
     , time: Date.now()
     , hash: req.hash
+    , pid: req.pid
     };
 
     messages.push(message);
