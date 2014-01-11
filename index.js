@@ -1,24 +1,13 @@
-var socket = require('socket.io-mw');
 var _ = require('underscore');
 var async = require('async');
-var http = require('http');
+var io = require('io');
 
 exports.createServer = function(config, cb) {
-  var server = http.createServer();
-  var io = socket.listen(server);
   var messages = [];
-
-  io.configure(function() {
-    io.set('transports', ['websocket']);
-    io.set('log level', 2);
-  });
-
-  io.configure('production', function () {
-    io.set('log level', 1);
-  });
 
   io.on('all', function(socket, payload, next) {
     payload.res.messages = messages;
+    socket.join('*');
     next();
   });
 
@@ -47,8 +36,8 @@ exports.createServer = function(config, cb) {
     res.message = message;
     next();
 
-    socket.broadcast.emit('message', res);
+    socket.broadcast('*', 'message', res);
   });
 
-  server.listen(config.port, '0.0.0.0', cb);
+  io.listen(config.port, cb);
 };

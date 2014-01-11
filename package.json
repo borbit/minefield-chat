@@ -6,7 +6,7 @@
     "Serge Borbit <serge.borbit@gmail.com>"
   ],
   "dependencies": {
-    "socket.io-mw": "0.0.3",
+    "io": "git://github.com/borbit/io-server.git",
     "underscore": "*",
     "async": "*"
   },
