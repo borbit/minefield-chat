@@ -3,11 +3,19 @@ var async = require('async');
 var io = require('io');
 
 exports.createServer = function(config, cb) {
-  var messages = [];
+  var messages = {};
 
-  io.on('all', function(socket, payload, next) {
-    payload.res.messages = messages;
-    socket.join('*');
+  io.on('room', function(socket, payload, next) {
+    var room = payload.req || 'eng';
+    var res = payload.res;
+    
+    if (!messages[room]) {
+      messages[room] = [];
+    }
+
+    res.messages = messages[room];
+    socket.leaveAll();
+    socket.join(room);
     next();
   });
 
@@ -15,7 +23,7 @@ exports.createServer = function(config, cb) {
     var req = payload.req;
     var res = payload.res;
 
-    if (!req.message) {
+    if (!req.message || !req.room) {
       return next(new Error('Invalid message'));
     }
 
@@ -27,7 +35,7 @@ exports.createServer = function(config, cb) {
     , pid: req.pid
     };
 
-    messages.push(message);
+    messages[req.room].push(message);
 
     if (messages.length > 200) {
       messages.shift();
@@ -36,7 +44,7 @@ exports.createServer = function(config, cb) {
     res.message = message;
     next();
 
-    socket.broadcast('*', 'message', res);
+    socket.broadcast(req.room, 'message', res);
   });
 
   io.listen(config.port, cb);
