@@ -1,6 +1,6 @@
 var _ = require('underscore');
 var async = require('async');
-var io = require('io');
+var io = require('io-server');
 
 exports.createServer = function(config, cb) {
   var messages = {};
